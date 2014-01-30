@@ -1,0 +1,23 @@
+<h1>Relação de Tipos de Equipamento</h1>
+
+<table border="1">
+  <tr>
+	<td>CÓDIGO</td>
+  	<td>DESCRIÇÃO</td>
+  </tr>
+
+<% @tipos.each do |tipo| %>
+  <tr>
+    <td><%= tipo.type_code %></td>
+    <td><%= tipo.type_description %></td>
+    <td><%= link_to 'Exibir', tipo %>
+        <%= link_to 'Editar', edit_tipo_path(tipo) %>
+        <%= link_to 'Apagar', tipo, :confirm => 'Tem certeza?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Incluir novo tipo de equipamento', new_tipo_path %>

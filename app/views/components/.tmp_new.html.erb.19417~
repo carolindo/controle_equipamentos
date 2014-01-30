@@ -1,0 +1,37 @@
+<h1>Incluir Equipamento</h1>
+
+<% form_for (@equipamento) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :description, 'Descrição: ' %></td>
+		<td><%= f.text_field :description %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :serial, 'Número de série: ' %></td>
+		<td><%= f.text_field :serial %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :model, 'Modelo: ' %></td>
+		<td><%= f.text_field :model %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :acquisition_date, 'Data de aquisição: ' %></td>
+		<td><%= f.text_field :acquisition_date %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :equipment_type, 'Tipo do equipamento: ' %></td>
+		<td><%= f.text_field :equipment_type %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :equipment_location, 'Localização: ' %></td>
+		<td><%= f.text_field :equipment_location %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <p>
+    <%= f.submit 'Incluir' %>
+  </p>
+<% end %>
+
+<%= link_to 'Voltar', equipamentos_path %>

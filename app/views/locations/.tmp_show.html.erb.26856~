@@ -1,0 +1,14 @@
+<% form_for(@location) do |f| %>
+  <br><br><br>
+  <table>
+  	<tr>
+	    <td><%= f.label :location_description, 'Descrição: ' %></td>
+		<td><%= @location.location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+<br><br>
+<%= link_to 'Editar', edit_location_path(@location) %> |
+<%= link_to 'Listar locais', locations_path %>
+<%= link_to 'Incluir novo local', new_location_path %>

@@ -1,0 +1,14 @@
+<%=flash[:notice]%>
+<br>
+<% form_for(@location) do |f| %>
+  <table>
+  	<tr>
+	    <td><%= f.label :location_description, 'Descrição: ' %></td>
+		<td><%= f.text_field :location_description, :disabled => true %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+<%= link_to 'Editar', edit_location_path(@location) %> |
+<%= link_to 'Listar locais', locations_path %>
+<%= link_to 'Incluir novo local', new_location_path %>

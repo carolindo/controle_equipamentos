@@ -1,0 +1,17 @@
+<% form_for(@comptype) do |f| %>
+  <br><br><br>
+  <table>
+  	<tr>
+	    <td><%= f.label :type_description, 'Descrição: ' %></td>
+		<td><%= @comptype.type_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+  <br>
+  <table border="0">
+		<tr>
+			<td valign="top" align="center"><%= link_to "Voltar", comptypes_path, :id => "btnAnchor" %></td>
+			<td valign="top" align="center"><%= link_to "Editar", edit_comptype_path(@comptype), :id => "btnAnchor" %></td>
+		</tr>
+  </table>

@@ -1,0 +1,24 @@
+<h1>Relação de Tipos de Equipamento</h1>
+
+<table border="1">
+  <tr>
+  	<td>DESCRIÇÃO</td>
+	<td>AÇÃO</td>
+  </tr>
+
+<% @comptypes.each do |comptype| %>
+  <tr>
+    <td><%= comptype.type_description %></td>
+    <td><%= link_to 'Exibir', comptype %>
+        <%= link_to 'Editar', edit_comptype_path(comptype) %>
+        <%= link_to 'Apagar', comptype, :confirm => 'Tem certeza?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Incluir novo tipo de equipamento', new_comptype_path %>
+<br>
+<%= link_to 'Voltar ao menu', :menus %>

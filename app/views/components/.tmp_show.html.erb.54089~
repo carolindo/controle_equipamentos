@@ -1,0 +1,31 @@
+<% form_for(@component) do |f| %>
+  <table>
+  	<tr>
+	    <td><%= f.label :description, 'Descrição: ' %></td>
+		<td><%= @component.description %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :serial, 'Número de série: ' %></td>
+		<td><%= @component.serial %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :model, 'Modelo: ' %></td>
+		<td><%= @component.model %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :acquisition_date, 'Data de aquisição: ' %></td>
+		<td><%= @component.acquisition_date.strftime('%d/%m/%Y') %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :component_type, 'Tipo do equipamento: ' %></td>
+		<td><%= @component.comptype.type_description %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :component_location, 'Localização: ' %></td>
+		<td><%= @component.location.location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+<%= link_to 'Editar', edit_component_path(@component) %> |
+<%= link_to 'Listar equipamentos', components_path %>

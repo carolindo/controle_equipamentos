@@ -1,0 +1,21 @@
+<h1>Incluir Tipos de Equipamento</h1>
+
+<% form_for (@tipo) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :type_code, 'Código: ' %></td>
+		<td><%= f.text_field :type_code %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :type_description, 'Descrição: ' %></td>
+		<td><%= f.text_field :type_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <p>
+    <%= f.submit 'Incluir' %>
+  </p>
+<% end %>
+
+<%= link_to 'Voltar', tipos_path %>

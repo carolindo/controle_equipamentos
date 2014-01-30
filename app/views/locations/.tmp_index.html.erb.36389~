@@ -1,0 +1,24 @@
+<h1>Relação de Locais de Equipamento</h1>
+
+<table border="1">
+  <tr>
+  	<td>DESCRIÇÃO</td>
+	<td>AÇÃO</td>
+  </tr>
+
+<% @locations.each do |location| %>
+  <tr>
+    <td><%= location.location_description %></td>
+    <td><%= link_to 'Exibir', location %>
+        <%= link_to 'Editar', edit_location_path(location) %>
+        <%= link_to 'Apagar', location, :confirm => 'Tem certeza?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Incluir nova localização de equipamento', new_location_path %>
+<br>
+<%= link_to 'Voltar ao menu', :menus %>

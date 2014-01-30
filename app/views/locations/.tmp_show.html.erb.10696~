@@ -1,0 +1,18 @@
+<% form_for(@location) do |f| %>
+  <br><br><br>
+  <table>
+  	<tr>
+	    <td><%= f.label :location_description, 'Descrição: ' %></td>
+		<td><%= @location.location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+  <br>
+  <table border="0">
+		<tr>
+			<td valign="top" align="center"><%= link_to "Voltar", locations_path, :id => "btnAnchor" %></td>
+			<td valign="top" align="center"><%= link_to "Editar", edit_location_path(@location), :id => "btnAnchor" %></td>
+		</tr>
+  </table>
+

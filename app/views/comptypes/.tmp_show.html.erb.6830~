@@ -1,0 +1,14 @@
+<% form_for(@comptype) do |f| %>
+  <br><br><br>
+  <table>
+  	<tr>
+	    <td><%= f.label :type_description, 'Descrição: ' %></td>
+		<td><%= @comptype.type_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+<br><br>
+<%= link_to 'Editar', edit_comptype_path(@comptype) %> |
+<%= link_to 'Listar tipos', comptypes_path %>
+<%= link_to 'Incluir novo tipo', new_comptype_path %>

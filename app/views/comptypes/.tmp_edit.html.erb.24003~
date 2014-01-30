@@ -1,0 +1,19 @@
+<h1>Alterar tipo de equipamento</h1>
+
+<% form_for(@comptype) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :type_description, 'Descrição: ' %></td>
+		<td><%= f.text_field :type_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <p>
+    &nbsp;<%= submit_tag "Alterar", :class => "submit" %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Exibir', @comptype %> |
+<%= link_to 'Listar tipos de equipamento', comptypes_path %>

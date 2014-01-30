@@ -1,0 +1,15 @@
+<% form_for(@tipo) do |f| %>
+  <table>
+  	<tr>
+	    <td><%= f.label :type_code, 'Código: ' %></td>
+		<td><%= f.text_field :type_code, :disabled => true %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :type_description, 'Descrição: ' %></td>
+		<td><%= f.text_field :type_description, :disabled => true %></td>
+  	</tr>
+	<p></p>
+  </table>
+<% end %>
+<%= link_to 'Editar', edit_tipo_path(@tipo) %> |
+<%= link_to 'Listar tipos de equipamento', tipos_path %>

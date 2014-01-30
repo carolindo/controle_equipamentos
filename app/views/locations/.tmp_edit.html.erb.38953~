@@ -1,0 +1,19 @@
+<h1>Alterar locais de equipamento</h1>
+
+<% form_for(@location) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :location_description, 'Descrição: ' %></td>
+		<td><%= f.text_field :location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <p>
+    &nbsp;<%= submit_tag "Alterar", :class => "submit" %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Exibir', @location %> |
+<%= link_to 'Listar locais de equipamento', locations_path %>

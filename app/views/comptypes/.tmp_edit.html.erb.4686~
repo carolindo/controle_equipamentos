@@ -1,0 +1,22 @@
+<h1>Alterar tipo de equipamento</h1>
+
+<% form_for(@tipo) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :type_code, 'Código: ' %></td>
+		<td><%= f.text_field :type_code %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :type_description, 'Descrição: ' %></td>
+		<td><%= f.text_field v %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <p>
+    <%= f.submit 'Alterar' %>
+  </p>
+<% end %>
+
+<%= link_to 'Exibir', @tipo %> |
+<%= link_to 'Listar tipos de equipamento', tipos_path %>

@@ -1,0 +1,41 @@
+<h1>Incluir Equipamento</h1>
+
+<% form_for (@component) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :description, 'Descrição: ' %></td>
+		<td><%= f.text_field :description %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :serial, 'Número de série: ' %></td>
+		<td><%= f.text_field :serial %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :model, 'Modelo: ' %></td>
+		<td><%= f.text_field :model %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :acquisition_date, 'Data de aquisição: ' %></td>
+		<td><%= date_select :component, :acquisition_date, 
+                            :order => [:day, :month, :year], 
+ 							:use_month_numbers => true %>
+        </td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :component_type, 'Tipo do equipamento: ' %></td>
+		<td><%= collection_select :component, :component_type, Comptype.all, :id, :type_description %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :component_location, 'Localização: ' %></td>
+		<td><%= collection_select :component, :component_location, Location.all, :id, :location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <table border="0">
+	<tr>
+		<td><%= image_submit_tag "botao_incluir.png", :class => "submit" %></td>
+		<td><%= link_to 'Voltar', components_path, :class=>'submit' %></td>
+	</tr>
+  </table>
+<% end %>
