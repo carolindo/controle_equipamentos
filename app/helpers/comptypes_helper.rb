@@ -1,0 +1,2 @@
+module ComptypesHelper
+end

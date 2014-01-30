@@ -1,0 +1,6 @@
+xml.instruct!
+  xml.components do
+    @components.each do |component|
+      xml << component.to_xml(:dasherize=>false,:skip_instruct=>true,:include => [:location, :comptype],:only=>[:id,:model,:serial,:description,:acquisition_date,:responsible,:part_number,:location_description,:type_description],:root=>"component")
+  end
+end

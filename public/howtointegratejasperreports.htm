@@ -1,0 +1,599 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+
+  <title>HowtoIntegrateJasperReports in Ruby on Rails</title>
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <link href="http://oldwiki.rubyonrails.org/rails/feed.rss" rel="alternate" title="RSS" type="application/rss+xml">
+
+  <style type="text/css">
+    h1#pageName, .newWikiWord a, a.existingWikiWord, .newWikiWord a:hover, #TextileHelp h3 { 
+      color: #393; 
+    }
+
+    #Container, #Content {
+      width: 600px;
+    }
+  </style>
+
+  <link href="howtointegratejasperreports_arquivos/instiki.css" media="screen" rel="Stylesheet" type="text/css">
+  <link href="howtointegratejasperreports_arquivos/captcha.css" media="screen" rel="Stylesheet" type="text/css">
+  <style type="text/css"></style>
+</head><body>
+  <div id="Container">
+    <div id="Header">
+      <div id="Nav">
+        <img alt="Favicon" src="howtointegratejasperreports_arquivos/favicon.png" height="16" width="16">
+        <a href="http://www.rubyonrails.org/">Ruby on Rails</a> |
+        <a href="http://www.rubyonrails.org/screencasts">Screencasts</a> |
+        <a href="http://www.rubyonrails.org/down">Download</a> |
+        <a href="http://www.rubyonrails.org/docs">Documentation</a> |
+        <a href="http://weblog.rubyonrails.org/">Weblog</a> |
+        <a href="http://www.rubyonrails.org/community" class="current">Community</a> |
+        <a href="http://dev.rubyonrails.org/">Source</a>
+      </div>
+    </div>
+    
+    <div id="Content">
+      <div id="i2Nav">
+        <h1 id="pageName"><small>Ruby on Rails</small><br>HowtoIntegrateJasperReports</h1>
+        <form class="navigation" id="navigationForm">
+          <a href="http://oldwiki.rubyonrails.org/rails">Home Page</a> |
+          <a href="http://oldwiki.rubyonrails.org/rails/pages">All Pages</a> |
+          <a href="http://oldwiki.rubyonrails.org/rails/recent">Recently Revised</a> |
+          <a href="http://oldwiki.rubyonrails.org/rails/feed.rss">Feed</a>
+        </form>
+      </div>
+
+      
+
+<h1>JasperReports</h1>
+<h2>Acknowledgement</h2>
+<p>This is an update from someone who posted this very valuable
+information and I absolutely want to give all credits to this person,
+that I regrettably don’t know.<br>
+The original information however was becoming a little bit out of date
+and I tried to update it, and add some things I found usefull in
+setting up the integration between Ruby on Rails and JasperReports.<br>
+I’ve left the original text after my own text, so you can still read through the original text for additional information.<br>
+I’m not a native English speaker, so please excuse me if I made some
+errors against the English language. Feel free to correct my mistakes.</p>
+<p>FlexRails.</p>
+<h2>Introduction</h2>
+<p><a href="http://jasperforge.org/sf/projects/jasperreports">JasperReports</a>
+is a powerful—and even more important—well known open source Java
+reporting tool that has the ability to deliver rich content in formats
+such as <span class="caps">PDF</span>, <span class="caps">RTF</span>, <span class="caps">HTML</span>, <span class="caps">CSV</span> and <span class="caps">XML</span>. It is widely used and appreciated in the Java community because of its flexibility and the availability of various <span class="caps">GUI</span> tools for rapid report design.<br>
+For this example I will be using iReport.</p>
+<p>The following paragraphs explain how to interface Rails and JasperReports.<br>
+The interface I’m describing on this page is based on a command line
+interface between Rails and JasperReports. There is also a possibility
+to interface using webservices, but this is not in my scope yet.</p>
+<h2>Prerequisites</h2>
+<ul>
+	<li>You have a working Rails installation and a working Rails application, running on your localhost on port 3000.<br>
+I will refer to you Rails application directory like this: &lt;<span class="caps">RAILSAPP</span>&gt;</li>
+	<li>You
+have iReports installed and working on your development machine. This
+implies of course also a suitable java environment for iReport. I will
+refer to your iReport installation directory like this: &lt;<span class="caps">IREPORT</span>&gt;</li>
+</ul>
+<h2>Steps</h2>
+<p>These are the steps to succes (hopefully)</p>
+<ul>
+	<li>Create a xml data source in Rails</li>
+	<li>Create a report in iReport using the Rails data source</li>
+	<li>Installing a JasperReports ‘runtime’ in your &lt;<span class="caps">RAILSAPP</span>&gt;</li>
+	<li>Do some Rails magic</li>
+	<li>Running your report from Rails and returning a JasperReports generated pdf to the webbrowser.</li>
+</ul>
+<h2>Creating the Rails data source</h2>
+<p>The data we will pass from Rails to JasperReports will be in <span class="caps">XML</span>. <span class="caps">XML</span> is a standard datasource for JasperReports and Rails is actually very good at generating <span class="caps">XML</span> data.</p>
+<p>I have an Accounting controller. In this Accounting controller I
+created the following procedure to create a list of customers. I’ll
+show you the controller code, and the accompanying view.<br>
+The controller code: (&lt;<span class="caps">RAILSAPP</span>&gt;/app/controllers/accounting_controller.rb)</p>
+<pre>def customer_list
+   @customers=Customer.find(:all)
+end
+</pre>
+<p>The view code:<br>
+(&lt;<span class="caps">RAILSAPP</span>&gt;/app/views/accounting/customer_list.rxml)</p>
+<pre>xml.instruct!
+xml.customer_list_result do
+	xml.invoice_customers do
+		@customers.each do |customer|
+			xml &lt;&lt; customer.to_xml(:dasherize=&gt;false,:skip_instruct=&gt;true,:only=&gt;[:id,:name,:city],:root=&gt;"customer")
+		end
+	end
+end
+</pre>
+<p>As you can see I fooled around a little bit with the Rails to_xml
+method. You can keep it simpler off course but it is worth
+investigating the possibilities of to_xml.<br>
+Don’t you love how much you can do with a few lines of Ruby on Rails.</p>
+<p>Now start your browser and goto <a href="http://localhost/">http://localhost</a>:3000/accounting/customer_list.<br>
+The xml result is now shown in your browser, and depending on your browser the output is in a pretty outline or not.<br>
+Anyway, goto the source of the page you are looking at. Every browser
+has this possibility, and you should now see your complete <span class="caps">XML</span>
+document. Copy-Paste it into your favorite text editor and save it
+somewhere on your disk. We will use this xml file for developing the
+report. Later on we will of course switch to a live Rails data source
+and you can delete this file.<br>
+My <span class="caps">XML</span> file looks like this</p>
+<pre><code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;customer_list_result&gt;
+  &lt;invoice_customers&gt;
+	&lt;customer&gt;
+	  &lt;id type="integer"&gt;711&lt;/id&gt;
+	  &lt;name&gt;3D-Design&lt;/name&gt;
+	  &lt;city&gt;Bigtown&lt;/city&gt;
+	&lt;/customer&gt;
+	&lt;customer&gt;
+	  &lt;id type="integer"&gt;496&lt;/id&gt;
+	  &lt;name&gt;A Nuino&lt;/name&gt;
+	  &lt;city&gt;Smalltown&lt;/city&gt;
+	&lt;/customer&gt;
+	&lt;customer&gt;
+	  &lt;id type="integer"&gt;368&lt;/id&gt;
+	  &lt;name&gt;International Inc.&lt;/name&gt;
+	  &lt;city&gt;Expensivetown&lt;/city&gt;
+	&lt;/customer&gt;
+  &lt;/invoice_customers&gt;
+&lt;/customer_list_result&gt;
+</code></pre>
+<h2>Create a report in iReport</h2>
+<ul>
+	<li>Start your iReport and create a new Report.</li>
+	<li>Choose menu: Data —&gt; Connections / DataSources<br>
+Click the new button, select ‘<span class="caps">XML</span> file data source’ from the list and click the ‘Next’ button.<br>
+In this next window, give your <span class="caps">XML</span> datasource a name, browse and select the <span class="caps">XML</span>
+file from the previous step, and choose ‘Use the report XPath
+expression when filling the report’. Depending on the data in the
+report you might want to tinker with date settings and stuff. Finally
+save this datasource.</li>
+	<li>Choose menu: Data —&gt; Set active connection and select the data source you just created.</li>
+	<li>Choose menu: Data —&gt; Report query.<br>
+Select xpath2 in the ‘query language’ drop down and enter you xpath expression. For my example this is:<br>
+/customer_list_result/invoice_customers/customer<br>
+You can probably figure out why if you look at my <span class="caps">XML</span>.<br>
+Next drag the xml field nodes for the fields you will need on your
+report from the xml structure on the right, into the fields table at
+the bottom of this screen.</li>
+	<li>Now you can use iReport to lay out a beautiful report. This is however not an iReport tutorial so you are on your own here.</li>
+	<li>Where do you save your reports ? Well I save them in &lt;<span class="caps">RAILSAPP</span>&gt;/app/reports which I created for my reports. You also need to make sure your compiled files are also stored in your &lt;<span class="caps">RAILSAPP</span>&gt;
+directory. You can do this by going to options→compiler and checking
+“Use Reports Directory to Compile”. You then need to compile and save
+your report. You will see that for every report JasperReports creates 3
+files: .jrxml file which contains the definition for you report, a
+.java file which is the java code that was generated from the report
+definition, and a compliled .jasper file which is actually what you
+will need for running your reports. I’ve saved my report as
+custrep.jrxml.</li>
+	<li>If you see a pretty output in iReport you could (and should) now switch to the live Rails data source like this.
+	<ul>
+		<li>Choose menu: Data —&gt; Connections / DataSources.</li>
+		<li>Click the new button, select ‘Remote <span class="caps">XML</span> file data source’ from the list and click the Next button.</li>
+		<li>In this next window give it a name and enter the datasource like this:</li>
+		<li><a href="http://localhost/">http://localhost</a>:3000/accounting/customer_list. That’s right, the exact same url you used before.</li>
+		<li>Now save this data source and set it as the active data connection (choose menu: Data —&gt; set active connection).</li>
+	</ul></li>
+</ul>
+<p>iReport now calls your Rails action to retrieve its data. Neat,
+right? But we still have to call the report from our Rails application.</p>
+<h2>Install the JasperReports ‘runtime’</h2>
+<p>JasperReports is no more than a Java library that offers the ability
+to fill previously designed and compiled reports with some data and to
+save these reports in a specified file format.<br>
+I have installed this library in &lt;<span class="caps">RAILSAPP</span>&gt;/app/jasper.<br>
+If you put the runtime in this jasper directory and the reports you create in the reports directory, like I showed before.<br>
+The complete JasperReports will be deployed to your production server, just by deploying the &lt;<span class="caps">RAILSAPP</span>&gt;/app on the production server. There is nothing else to do on the production server. That’s the way I like it.<br>
+Okay, let’s go:</p>
+<ul>
+	<li>create the following directories:<br>
+&lt;<span class="caps">RAILSAPP</span>&gt;/app/jasper/lib and <br>
+&lt;<span class="caps">RAILSAPP</span>&gt;/app/jasper/bin</li>
+	<li>Copy the following files from &lt;<span class="caps">IREPORT</span>&gt;/lib to &lt;<span class="caps">RAILSAPP</span>&gt;/app/jasper/lib
+	<ul>
+		<li>commons-beanutils-1.7.jar</li>
+		<li>commons-collections-2.1.jar</li>
+		<li>commons-logging-1.0.2.jar</li>
+		<li>itext-1.3.1.jar</li>
+		<li>jasperreports-2.0.4.jar</li>
+		<li>jcommon-1.0.0.jar</li>
+		<li>jdt-compiler.jar</li>
+		<li>jfreechart-1.0.0.jar</li>
+		<li>log4j-1.2.13.jar</li>
+		<li>poi-3.0.1-<span class="caps">FINAL</span>-20070705.jar</li>
+		<li>xalan.jar</li>
+	</ul></li>
+</ul>
+<p>iReports has great support for adding barcodes to your reports. If
+you plan on using barcodes then you’ll also need these two jar files:</p>
+<ul>
+	<li>iReport.jar (7.6 MB!)</li>
+	<li>barbecue-1.5-beta1.jar</li>
+</ul>
+<p>Actually, copying all files from &lt;<span class="caps">IREPORT</span>&gt;/lib to &lt;<span class="caps">RAILSAPP</span>&gt;/app/jasper/lib, is even better, because then all the features from iReport are available to your Rails application.</p>
+<p>It’s very well possible that for some files you will see other
+version numbers but the main thing is that you have to copy these files
+from your iReport lib into you Rails app jasper lib. The reports you
+have created with your version have to stay in sync with the libraries
+from your iReport installation.</p>
+<ul>
+	<li>Download <a href="http://jonas.schwertfeger.ch/jasperreports_on_rails.tar.gz">this</a>
+	<ul>
+		<li>Copy only the file XmlJasperInterface.class from this download to &lt;<span class="caps">RAILSAPP</span>&gt;/app/jasper/bin</li>
+	</ul></li>
+</ul>
+<h3>A couple notes on XmlJasperInterface:</h3>
+<p>When generating a report in <span class="caps">XLS</span> format, I
+had a lot of grief with an error that said that it couldn’t find the
+field “IS_ONE_PAGE_PER_SHEET”. I was using jasperreports-3.0.0.jar. I’m
+not a Java guy so I can’t really figure out why, but the best I can
+tell, something changes since jasperreports-2.0.4.jar. The newer
+version of JasperReports doesn’t like the way that
+XmlJasperInterface.class sets this value. If you need version 3 as I
+did, you can:</p>
+<ol>
+	<li>Find XmlJaspserInterface.java amongst all the other files in the <a href="http://rubyforge.org/projects/jasper-rails/">jasper-rails project</a></li>
+	<li>Comment out the line that sets “IS_ONE_PAGE_PER_SHEET”</li>
+	<li>Recompile XmlJaspserInterface.java into a new XmlJaspserInterface.class file using “javac”.  The command I used was:<br>
+<pre>javac XmlJasperInterface.java -cp “/rails/<span class="caps">RAILS</span> <span class="caps">ROOT</span>/app/jasper/lib/jasperreports-3.0.0.jar” -target 1.5</pre></li>
+</ol>
+<p>Also, XmlJasperInterface writes very helpful log file to the Rails
+root directory, so make sure to look at that if you are having problems.<br>
+— Scotty</p>
+<p>Your JasperReports runtime is now installed.</p>
+<h2>The Rails magic</h2>
+<p>With the JasperReports runtime installed we need to add some Rails code to make things work.</p>
+<ul>
+	<li>Create a model called ‘Document’ in your Rails application and paste in this code:</li>
+</ul>
+<pre><code>
+class Document
+  include Config
+  def self.generate_report(xml_data, report_design, output_type, select_criteria)
+    report_design &lt;&lt; '.jasper' if !report_design.match(/\.jasper$/)
+    interface_classpath=Dir.getwd+"/app/jasper/bin" 
+    case CONFIG['host']
+      when /mswin32/
+        mode = "w+b" #windows requires binary mode
+        Dir.foreach(Dir.getwd+"/app/jasper/lib") do |file|
+          interface_classpath &lt;&lt; ";#{Dir.getwd}/app/jasper/lib/" + file if (file != '.' and file != '..' and file.match(/.jar/))
+        end
+      else
+        mode = "w+"
+        Dir.foreach(Dir.getwd+"/app/jasper/lib") do |file|
+          interface_classpath &lt;&lt; ":#{Dir.getwd}/app/jasper/lib/" + file if (file != '.' and file != '..' and file.match(/.jar/))
+        end
+    end
+		result=nil
+		IO.popen "java -Djava.awt.headless=true -cp \"#{interface_classpath}\" XmlJasperInterface -o#{output_type} -f#{Dir.getwd}/app/reports/#{report_design} -x#{select_criteria}", mode do |pipe|
+			pipe.write xml_data
+			pipe.close_write
+			result = pipe.read
+			pipe.close
+		end
+    return result
+  end
+end
+</code></pre>
+<ul>
+	<li>Create a new file: &lt;<span class="caps">RAILSAPP</span>&gt;/app/helpers/send_doc_helper.rb and paste in the following code:</li>
+</ul>
+<pre><code>
+module SendDocHelper
+  protected
+  def cache_hack
+    if request.env['HTTP_USER_AGENT'] =~ /msie/i
+      headers['Pragma'] = ''
+      headers['Cache-Control'] = ''
+    else
+      headers['Pragma'] = 'no-cache'
+      headers['Cache-Control'] = 'no-cache, must-revalidate'
+    end
+  end
+
+  def send_doc(xml, xml_start_path, report, filename, output_type = 'pdf')
+    case output_type
+    when 'rtf'
+      extension = 'rtf'
+      mime_type = 'application/rtf'
+      jasper_type = 'rtf'
+    else # pdf
+      extension = 'pdf'
+      mime_type = 'application/pdf'
+      jasper_type = 'pdf'
+    end
+
+    cache_hack
+    send_data Document.generate_report(xml, report, jasper_type, xml_start_path),
+        :filename =&gt; "#{filename}.#{extension}", :type =&gt; mime_type, :disposition =&gt; 'inline'
+  end
+end
+</code></pre>
+<p>There you have it — the Rails magic. Don’t ask too many questions.<br>
+In ruby 1.9.1 watch the encoding. document.rb needs to be modified.<br>
+Just make mode= “w+b” in both cases. This puts the pipe into binary mode and avoids encoding issues in Rails.</p>
+<p>One important thing to notice however, is that there are no calls to
+shell scripts or bat files. Rails makes a direct call to Java and
+communicates with the Java process through pipes. Although there is a
+little bit of performance loss in starting the Java process, the pipes
+based communication is very fast.</p>
+<h2>Finally! Running the report</h2>
+<p>To run the report add this to a controller where you want to add an action for running the report:</p>
+<pre>helper :send_doc
+include SendDocHelper
+
+def customer_report
+  @customers=Customer.find(:all)
+  send_doc(
+    render_to_string(:template =&gt; 'accounting/customer_list', :layout =&gt; false),
+     '/customer_list_result/invoice_customers/customer', 
+    'custrep',
+    'CustomerReport', 
+    'pdf')
+end
+</pre>
+<p>The parameters to the send_doc method are:</p>
+<ol>
+	<li>the &lt;<span class="caps">RAILSAPP</span>&gt;/app/views/accounting/customer_list.rxml</li>
+	<li>the xpath expression you used in iReport</li>
+	<li>the name of the report as you saved it in &lt;<span class="caps">RAILSAPP</span>&gt;/app/reports</li>
+	<li>the suggested name that your users will see when they save your pdf from their browsers</li>
+	<li>the fact that you want to send the report as a pdf to your users.</li>
+</ol>
+<p>Now open your browser again and go to:<br>
+<a href="http://localhost/">http://localhost</a>:3000/accounting/customer_report and a nice pdf should be displayed in your browser.</p>
+<p>That’s it. I wish you all lots of success.</p>
+<h2>Manually Invoking Report</h2>
+<p>Invoking Jasper through a Ruby Java call does not always generate meaningful error messages.</p>
+<p>To assist with resolving configuration issues, it may be helpful to manually invoke the call to Jasper from your command line.</p>
+<p>This can be achieved using the following (or similar):</p>
+<pre>java -Djava.awt.headless=true -cp "C:/project/app/jasper/bin;C:/project/app/jasper/lib/commons-logging-1.0.2.jar;C:/project/app/jasper/lib/itext-1.3.1.jar;......" XmlJasperInterface -opdf -fC:/project/app/reports/CustomerReport.jasper -x/customer_list_result/invoice_customers/customer &lt; customer.xml &gt; custrep.pdf
+</pre>
+<h2><span class="caps">THE</span> <span class="caps">ORIGINAL</span> <span class="caps">TEXT</span></h2>
+<p>Following you will find the original text before I started to mess
+around with it. It probably still contains usefull information for you
+to read/</p>
+<h2>Interface</h2>
+<p>JasperReports is no more than a Java library that offers the ability
+to fill previously designed and compiled reports with some data and to
+save these reports in a specified file format. Valid data sources are <span class="caps">JDBC</span> connections and <span class="caps">XML</span> files (using JRXmlDatasource), amongst others. Reading the data for the report from a database using raw <span class="caps">SQL</span>
+commands is of course possible but introduces duplicate logic, database
+vendor-specific code and concurrency issues. Besides that, there is no
+elegant way of reporting data that is not stored in a database but
+managed in Rails. There are no such problems if we use the <span class="caps">XML</span> data source and generate <span class="caps">XML</span> data in Rails using Builder templates—which is extremely easy and comfortable. For these reasons, the <span class="caps">XML</span> data source is used for feeding Rails data into JasperReports.</p>
+<p>JasperReports is integrated into Rails by execution of a simple Java application that receives the <span class="caps">XML</span>
+data for the reports through an IO pipe, creates the report and passes
+the results back trough the pipe right into the Rails application.</p>
+<p>The whole interface consists of the following parts:</p>
+<ul>
+	<li>JasperReports library</li>
+	<li>Java interface application that takes <span class="caps">XML</span> data and produces reports</li>
+	<li>Shell script to invoke the Java application</li>
+	<li>Rails code that builds an appropriate <span class="caps">CLASSPATH</span>, executes the Java interface application, and reads/writes through an IO pipe</li>
+	<li>Rails code that generates the <span class="caps">XML</span> data (using Builder templates)</li>
+	<li>Some Rails code that sends the generated report to the browser or stores it somewhere</li>
+</ul>
+<p>This might seem like a lot of work but actually it is not. At least, if you don’t have to write all the code yourself ;).</p>
+<h4>Code</h4>
+<p>I added a directory <em>jasper</em> to my Rails application root. It contains three subfolders</p>
+<ul>
+	<li>bin – the Java class file of the interface application</li>
+	<li>src – the Java source file of the interface application</li>
+	<li>lib – the JasperReports library and every 3rd-party library that is needed</li>
+</ul>
+<p>Apart from that, I added a <em>reports</em> directory to the Rails application root that contains the precompiled Jasper reports.</p>
+<p>The Rails code that builds the <span class="caps">CLASSPATH</span>, executes the Java app and handles the IO pipe looks like the following:</p>
+<pre><code>
+# app/models/document.rb
+class Document
+  include Config
+  def self.generate_report(xml_data, report_design, output_type, select_criteria)
+    report_design &lt;&lt; '.jasper' if !report_design.match(/\.jasper$/)
+    interface_classpath=Dir.getwd+"/jasper/bin"
+    case CONFIG['host']
+      when /mswin32/
+        Dir.foreach("jasper/lib") do |file|
+          interface_classpath &lt;&lt; ";#{Dir.getwd}/jasper/lib/" + file if (file != '.' and file != '..' and file.match(/.jar/))
+        end
+      else
+        Dir.foreach("jasper/lib") do |file|
+          interface_classpath &lt;&lt; ":#{Dir.getwd}/jasper/lib/" + file if (file != '.' and file != '..' and file.match(/.jar/))
+        end
+    end
+    pipe = IO.popen "java -Djava.awt.headless=true -cp \"#{interface_classpath}\" XmlJasperInterface -o#{output_type} -freports/#{report_design} -x#{select_criteria}", "w+b"
+    pipe.write xml_data
+    pipe.close_write
+    result = pipe.read
+    pipe.close
+    result
+  end
+end
+</code></pre>
+<p>As you can see from this code, there is no need to call any Windows
+batch file or Bash script. It has not been thoroughly tested but works
+in Windows and Linux (check that ‘java’ binary path though). Three
+parameters are passed to XmlJasperInterface:</p>
+<ul>
+	<li><strong>-o</strong> the report output type (supported types are <em>pdf</em>, <em>rtf</em>, <em>xml</em>, <em>xls</em> and <em>csv</em>; even though I only really tested <em>pdf</em> and _rtf_)</li>
+	<li><strong>-f</strong> the path and filename of the precompiled report</li>
+	<li><strong>-x</strong> an <span class="caps">XML</span> select path (refer to <a href="http://ireport.sourceforge.net/index.php?p_module=page&amp;pageid=17">Using the <span class="caps">XML</span> datasource</a> for further information)</li>
+</ul>
+<p>The data returned by _generate_report_ is the final report that can
+be passed to a browser for example. Include the following module in
+every controller that needs to create and send reports:</p>
+<pre><code>
+# app/helpers/send_doc_helper.rb
+
+module SendDoc
+  protected
+  def cache_hack
+    if @request.env['HTTP_USER_AGENT'] =~ /msie/i
+      @headers['Pragma'] = ''
+      @headers['Cache-Control'] = ''
+    else
+      @headers['Pragma'] = 'no-cache'
+      @headers['Cache-Control'] = 'no-cache, must-revalidate'
+    end
+  end
+  
+  def send_doc(xml, xml_start_path, report, filename, output_type = 'pdf')
+    case output_type
+    when 'rtf'
+      extension = 'rtf'
+      mime_type = 'application/rtf'
+      jasper_type = 'rtf'
+    else # pdf
+      extension = 'pdf'
+      mime_type = 'application/pdf'
+      jasper_type = 'pdf'
+    end
+  
+    cache_hack
+    send_data Document.generate_report(xml, report, jasper_type, xml_start_path),
+        :filename =&gt; "#{filename}.#{extension}", :type =&gt; mime_type, :disposition =&gt; 'inline'
+  end
+end
+</code></pre>
+<p>The controller code could be as follows:</p>
+<pre><code>
+# app/controllers/report_controller.rb
+class ReportController &lt; ApplicationController
+  model :document
+  helper :send_doc
+  include SendDoc
+
+  def report
+    @course = Course.find(params[:id])
+    @user = User.find(session[:user_id])
+    send_doc(render_to_string(:template =&gt; 'xml_course_report', :layout =&gt; false),
+      '/Course/Information/Participants/Participant', 'course_report', "course#{@course.id}", 'pdf')
+  end
+
+end
+</code></pre>
+<p>In the above code we render the Builder template _xml_course_report_
+into a string and pass this string to the send_doc method.
+_course_report_ is the filename of the precompiled report and <em>course#{@course.id}</em> is the filename of the <span class="caps">PDF</span> document that gets sent to the browser. The extension <em>.pdf</em> is added automatically in _send_doc_.</p>
+<p>The Builder template (app/views/xml_course_report.rxml) could look as follows:</p>
+<pre><code>
+xml.instruct!
+xml.Course do
+  xml.MetaInformation do
+    xml.GeneratedAt(Time.now)
+    xml.GeneratedBy do
+      xml.Name(@user.name)
+      xml.UserName(@user.user_name)
+      xml.Email(@user.email)
+    end
+  end
+  xml.Information do
+    xml.Name(@course.name)
+    xml.Participants do
+      @course.participants.each do |p|
+        xml.Participant do
+          xml.Name(p.name)
+          xml.Phone(p.phone)
+          xml.City(:zip =&gt; p.city.zip, :name =&gt; p.city.name)
+        end
+      end
+    end
+  end
+end
+</code></pre>
+<p>Voilà, that’s it.</p>
+<h2>Performance Issues</h2>
+<p>JasperReports itself is very fast, but bringing up a Java Virtual
+Machine for each call of _generate_doc_ takes its time (about 2 seconds
+on my machine). It would be much faster, if the Java interface
+application would run as a server application all the time and
+listening on a specific <span class="caps">TCP</span> port for
+incoming report generation requests. Then, the performance issue would
+be gone. I haven’t found the time to implement a JasperReport server
+yet. But, if somebody does, please let me know!</p>
+<p>I think an option for better performance would be to use Apache
+Cocoon and call this pages from ruby. This way one could either use
+Apache <span class="caps">FOP</span> and <span class="caps">XML</span>/<span class="caps">XSLT</span> to generate <span class="caps">PDF</span> pages or integrate JasperReports or Eclipse <span class="caps">BIRT</span> into Cocoon. When Cocoon is then executed as Tomcat-Webapp the startuptime is nearly null. (<a href="mailto:markusw@nmmn.com">markusw@nmmn.com</a>)</p>
+<p>What is quite interesting concerning the usage of JasperReports ist Jasper Intelligence, from <a href="http://jasperintel.sourceforge.net/">http://jasperintel.sourceforge.net</a>. They provide JasperReports as a Webservice.</p>
+<p>RE:JasperReports as a Webservice. Although their website advertises support for <span class="caps">PHP</span>,
+Python and other scripting languages, this is not entirely true.
+Scouring through the Net as well as JasperSoft’s documentation does not
+yield any useful information about the server’s Web Service <span class="caps">API</span>. A quick look at their forums reveals that this isn’t fully implemented yet. A workaround to this would probably be to use <span class="caps">WWW</span>::Mechanize to get those document formats from the JasperServer. — relaxdiego</p>
+<p>RE:RE:JasperReports as a Webservice.</p>
+<p>There is a product available for this, and it’s called JasperIntelligence.  Although the <span class="caps">API</span> is pretty much opaque, I was able to get a Rails app to fetch <span class="caps">PDF</span>
+exports of the sample reports provided with JI via the web service. I
+have instructions on how it can be done in a basic way on the
+JasperIntelligence forum: <a href="http://www.jasperforge.org/index.php?option=com_joomlaboard&amp;Itemid=215&amp;func=view&amp;id=15846&amp;catid=10">http://www.jasperforge.org/index.php?option=com_joomlaboard&amp;Itemid=215&amp;func=view&amp;id=15846&amp;catid=10</a><br>
+I am definitely interested in more attention on this subject, since
+there don’t appear to be any enterprise class reporting solutions
+available for Rails, and Crystal Reports is well outside of my means
+($18k+ per year). +-MariusAgricola</p>
+<p>RE:RE:RE Jasper Reports as a webservice</p>
+<p>I’m using the following setup:</p>
+<p>Jetty server (java) providing a jython interface to jasper reports<br>
+You call the jasper jetty service from Rails like so:</p>
+<pre><code>
+options = {
+          :c_sql_where=&gt;@grid.search_arg_sql(params) || '1=1',
+          :c_sql_order=&gt;@grid.order_arg_sql(params) ,
+          :outputType=&gt;params[:outputType],
+          :compiledDesign=&gt;'customer_equipments',
+        }
+        send_jasper_export(:mysql,options,'equipments')
+</code></pre>
+<p>send_jasper_export is a helper method that does the actual call by: <br>
+ <br>
+</p><pre><code>
+response = Net::HTTP.post_form(URI.parse('http://jasper:8080/jasapp/jasper.py'),arguments)
+</code></pre>
+<p>This works great and the performance is very good.</p>
+<p>You can build the report with ireport and use a xml databasource or
+a sql datasource. All the c_ arguments are customer arguments that are
+passed as parameters to the report.</p>
+<p>If there is interest i could write a bigger tutorial, contact me at daniel[AT]itxl.nl</p>
+<h2>Jasper Reports with a <span class="caps">JDBC</span> datasource.</h2>
+<p>I’m looking into getting this working using Jasper reports compiled to use a <span class="caps">JDBC</span> data source. If anyone has already done this or can see a trivial way to do it then please share here.</p>
+<h2>Download</h2>
+<p>You can download the Java interface application, the shell script as
+well as the JasperReports library 1.1.0 (and the required 3rd-party
+libraries) bundled from this <a href="http://jonas.schwertfeger.ch/jasperreports_on_rails.tar.gz">location</a>.<br>
+Notice however, that this Wiki-Page gets updated by people around the
+world whereas the code you can download here does not and there might
+be differences between the code shown above and the one you download.
+For example, I originally used a shell script between Rails and Java,
+but apparently somebody updated this Wiki-Page with a much more elegant
+approach that calls the Java Virtual Machine directly from Rails.</p>
+<p>Including the JasperReport source file for this sample data would make this much easier to understand. —It is included now.</p>
+
+<div class="byline">
+  Updated
+  on February 18, 2010 08:43 
+  by <a href="http://oldwiki.rubyonrails.org/rails/pages/Stuart+Coyle">Stuart Coyle</a> (211.31.5.69)
+</div>
+
+<div class="navigation">
+  <a href="http://oldwiki.rubyonrails.org/rails/pages/howtointegratejasperreports/versions/new">Edit</a>
+
+  
+    | 
+    <a href="http://oldwiki.rubyonrails.org/rails/pages/HowtoIntegrateJasperReports/versions/117" class="navlink">Back in time</a>
+    <small>(117 older versions)</small>
+  
+</div>
+
+      <div id="footer">
+        <p><a href="http://instiki.org/">i2</a> on <a href="http://rubyonrails.com/">Rails</a>,
+        powered by <a href="http://www.modrails.com/">Phusion Passenger™</a> and
+        <a href="http://www.rubyenterpriseedition.com/">Ruby Enterprise Edition</a>.</p>
+      </div>
+    </div>
+  </div>
+</body></html>

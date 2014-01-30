@@ -1,0 +1,46 @@
+<h1>Alterar equipamento</h1>
+
+<% form_for(@component) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :description, 'Descrição: ' %></td>
+		<td><%= f.text_field :description, :size=>80 %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :serial, 'Número de série: ' %></td>
+		<td><%= f.text_field :serial, :size=>60 %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :model, 'Modelo: ' %></td>
+		<td><%= f.text_field :model, :size=>60 %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :acquisition_date, 'Data de aquisição: ' %></td>
+		<td><%= date_select :component, :acquisition_date, 
+                            :order => [:day, :month, :year], 
+ 							:use_month_numbers => true %>
+        </td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :component_type, 'Tipo do equipamento: ' %></td>
+		<td><%= collection_select :component, :component_type, Comptype.all, :id, :type_description %></td>
+  	</tr>
+  	<tr>
+	    <td><%= f.label :component_location, 'Localização: ' %></td>
+		<td><%= collection_select :component, :component_location, Location.all, :id, :location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <br>
+  <table border="0">
+		<tr>
+			<td valign="top" align="center"><%= submit_tag "Alterar", :id => "btnSubmit", :onmouseover => "this.style.cursor='pointer';"  %>
+			    &nbsp;
+			</td>
+			<td valign="top" align="center"><%= link_to "Voltar", components_path, :id => "btnAnchor" %></td>
+		</tr>
+  </table>
+<% end %>
+
+ 

@@ -1,0 +1,6 @@
+xml.instruct!
+  xml.locations do
+    @locations.each do |location|
+      xml << location.to_xml(:dasherize=>false,:skip_instruct=>true,:only=>[:id,:location_description],:root=>"location")
+  end
+end

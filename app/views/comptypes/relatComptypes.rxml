@@ -1,0 +1,6 @@
+xml.instruct!
+  xml.comptypes do
+    @comptypes.each do |comptype|
+      xml << comptype.to_xml(:dasherize=>false,:skip_instruct=>true,:only=>[:id,:type_description],:root=>"comptype")
+  end
+end

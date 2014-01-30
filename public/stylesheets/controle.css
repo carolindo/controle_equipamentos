@@ -1,0 +1,91 @@
+body { 	margin:0; }
+#topo { background:blue;
+		color:white;
+		width:100%;
+		height:100px;
+		margin:0;
+
+		}
+#topo strong 
+	{ 	font:bold 24px verdana,arial,helvetica,sans-serif;
+		margin:25px;
+		float:left;
+
+	}
+#header_tabela 
+	{ font:bold 24px verdana,arial,helvetica,sans-serif;
+      color:white;
+	  background:blue;
+	}
+#linha_tabela 
+	{ font: 24px verdana,arial,helvetica,sans-serif;
+      color:black;
+      background:#eee;
+	}
+.tabela {
+   margin-left: 5px;
+
+}
+a:link
+	{text-decoration:none}
+a:visited
+	{text-decoration:none}
+a:hover
+	{text-decoration:none}
+a:active
+	{text-decoration:none}
+
+#conteudo { margin:25px; }
+.novo { padding-left:20px;
+		background:url(../images/mais.png) 3px center no-repeat;
+		font-weight:bold;
+		} 
+.submit { border:0px solid black;
+background:white;
+color:white;
+font-weight:bold;
+padding:3px;
+}
+
+#menu ul { padding:0;
+margin:0;
+float:left;
+width:100%;
+list-style:none;
+background:black;
+
+}#menu li { display:inline; }#menu li a { padding:5px;
+border:1px solid black;
+text-decoration:none;
+width:100px;
+background:#eee;
+float:left;
+
+}  
+#btnAnchor
+	{
+    background: url(../images/botao.png) no-repeat;
+    width:94px;
+	height:33px;
+	display:block;
+	font-size:12px;
+	font-weight:bold;
+	padding:9px;
+	color:white}
+
+#btnSubmit {
+background: url(../images/botao.png) no-repeat;
+width: 112px; height:33px;
+border-style:none;
+color:white;
+font-size:14px;
+font-weight:bold;
+padding:0px;
+}
+.icoExcluir
+	{
+    background: url(../images/delete_ico.png) no-repeat;
+    width:32px;
+	height:32px;
+	display:block;
+	}

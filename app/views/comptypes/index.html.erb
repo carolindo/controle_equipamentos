@@ -1,0 +1,31 @@
+<br>
+<h1>Relação de Tipos de Equipamento</h1>
+<div style="color: red">
+  <%=flash[:error]%>
+</div>
+<table id='header_tabela' border="0" class='tabela'>
+  <tr>
+  	<td>DESCRIÇÃO</td>
+	<td align='center'>AÇÃO</td>
+  </tr>
+
+<% @comptypes.each do |comptype| %>
+  <tr id='linha_tabela'>
+    <td><%= comptype.type_description %></td>
+    <td><%= link_to image_tag ('show_ico.png', :border =>0), comptype %>
+        <%= link_to image_tag ('edit_ico.png', :border =>0), edit_comptype_path(comptype) %>
+        <%= link_to image_tag ('delete_ico.png', :border =>0), comptype, 
+               :confirm => 'Tem certeza?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= form_tag("/comptypes/new") %>
+<table border="0" class='tabela'>
+	<tr>
+	   <td><%= submit_tag "Incluir", :id => "btnSubmit", :onmouseover => "this.style.cursor='pointer';"  %></td>
+	</tr>
+</table>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"↵
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+		<title>Tela de administração <%= controller.action_name %></title>
+		<%= stylesheet_link_tag 'scaffold' %>
+		<%= stylesheet_link_tag 'controle' %> 
+	</head> 
+	<body> 
+		<div id="topo"> 
+			<strong>Controle de Equipamentos</strong>
+		</div>
+		<div id="menu"> <ul>
+			<li><%= link_to "Equipamentos",:controller=>"components",:action=>"index" %></li>
+			<li><%= link_to "Tipos",:controller => "comptypes" , :action => "index" %></li>
+			<li><%= link_to "Locais",:controller=>"locations",:action=>"index"%></li>
+		</div>
+		<p style="color:green;">
+			<%= flash[:notice] %>
+		</p>
+
+		<%= @content_for_layout %> 
+	</body> 
+</html> 

@@ -1,0 +1,28 @@
+<br>
+<h1>Relação de Locais de Equipamento</h1>
+<div style="color: red">
+  <%=flash[:error]%>
+</div>
+<table id='header_tabela' border="0" class='tabela'>
+  <tr>
+  	<td>DESCRIÇÃO</td>
+	<td align='center'>AÇÃO</td>
+  </tr>
+<% @locations.each do |location| %>
+  <tr id='linha_tabela'>
+    <td><%= location.location_description %></td>
+    <td><%= link_to image_tag ('show_ico.png', :border =>0), location %>
+        <%= link_to image_tag ('edit_ico.png', :border =>0), edit_location_path(location) %>
+        <%= link_to image_tag ('delete_ico.png', :border =>0), location, :confirm => 'Tem certeza?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+<br>
+<%= form_tag("/locations/new") %>
+<table border="0" class='tabela'>
+	<tr>
+	   <td><%= submit_tag "Incluir", :id => "btnSubmit", :onmouseover => "this.style.cursor='pointer';"  %></td>
+	</tr>
+</table>
+

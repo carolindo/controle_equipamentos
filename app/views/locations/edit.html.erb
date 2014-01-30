@@ -1,0 +1,20 @@
+<h1>Alterar locais de equipamento</h1>
+<% form_for(@location) do |f| %>
+  <%= f.error_messages %>
+  <table>
+  	<tr>
+	    <td><%= f.label :location_description, 'Descrição: ' %></td>
+		<td><%= f.text_field :location_description %></td>
+  	</tr>
+	<p></p>
+  </table>
+  <br>
+  <table border="0">
+		<tr>
+			<td valign="top" align="center"><%= submit_tag "Alterar", :id => "btnSubmit", :onmouseover => "this.style.cursor='pointer';"  %>
+			    &nbsp;
+			</td>
+			<td valign="top" align="center"><%= link_to "Voltar", locations_path, :id => "btnAnchor" %></td>
+		</tr>
+  </table>
+<% end %>
