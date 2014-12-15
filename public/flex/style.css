@@ -1,0 +1,294 @@
+/* CSS file */
+AdvancedDataGrid
+{
+	headerColors: #F7F7F7, #E6E7E9;
+	alternatingItemColors: #F2F2F2, #FFFFFF;
+	selectionColor: #B8CFEE;
+	color: #000000;
+	headerStyleName: advancedDataGridHeader;
+	focus-alpha : 0;
+	use-roll-over : false;
+	selection-duration : 0;
+	horizontalGridLines: false;
+	verticalGridLines: false;
+	rollOverColor: #CDD9EB;
+}
+AdvancedDataGridColumnGroup.headerTextColor{
+	color: #000000;
+	fontWeight: bold;
+}
+
+TitleWindow
+{
+	borderColor: #002D65;
+	borderAlpha: 0.8;
+	titleStyleName: titleWindowTitle;
+	
+	close-button-skin: Embed(source='com/hjm/assets/images/close.png');
+	close-button-disabled-skin: Embed(source='com/hjm/assets/images/close.png');
+	close-button-down-skin: Embed(source='com/hjm/assets/images/close.png');
+	close-button-over-skin: Embed(source='com/hjm/assets/images/close.png');
+	close-button-up-skin: Embed(source='com/hjm/assets/images/close.png');
+	cornerRadius: 0;
+	
+}
+.titleWindowTitle
+{
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 10;
+}
+.setDisabledColor{
+	color: #0080FF;
+}
+.setEnabledColor{
+	color: #000000;
+}
+LookupComboBox
+{
+	disabledColor: #7A7979;
+}
+ComboBox
+{
+	disabledColor: #7A7979;
+}
+VBox,HBox
+{
+	disabled-overlay-alpha: 0.3;
+}
+LinkButton.htmlLink{
+	color: #0033C6;
+	textDecoration: underline;
+	fontWeight: bold;
+	textRollOverColor: #3A67E7;
+	textSelectedColor: #0033C6;
+	use-roll-over: false;
+	disabledColor: #AAB3B3;
+}
+Accordion.accText{
+	fontSize: 14;
+	color: #F9FBFC;
+	textRollOverColor: #D5D0F7;
+}
+Label.labelBack{
+	color: #000000;
+} 
+Label.labelRed{
+	color: #FF0000;
+} 
+Label.fileIMP{
+	color: #659B65;
+}
+Label.fileND{
+	color: #FF0000;
+}
+Label.fileNE{
+	color: #FD9003;
+}
+Label.fileDEV{
+	color: #FD9003;	
+}
+Label.fileNC{
+	color: #FD9003;	
+}
+
+Button.buttonStyleCriarOT{   	
+	upSkin:Embed(source="com/hjm/assets/images/criar_ot.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/criar_ot_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/criar_ot.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/criar_ot.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleListarOT{   	
+	upSkin:Embed(source="com/hjm/assets/images/listar_ot.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/listar_ot_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/listar_ot.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/listar_ot.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleMultOT{   	
+	upSkin:Embed(source="com/hjm/assets/images/mult_ot.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/mult_ot_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/mult_ot.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/mult_ot.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleEncMultOT{   	
+	upSkin:Embed(source="com/hjm/assets/images/enc_multiplo.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/enc_multiplo_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/enc_multiplo.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/enc_multiplo.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleEvtOT{   	
+	upSkin:Embed(source="com/hjm/assets/images/evt.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/evt_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/evt.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/evt.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStylePortaIP{   	
+	upSkin:Embed(source="com/hjm/assets/images/ip.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/ip_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/ip.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/ip.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleLeasedlines{   	
+	upSkin:Embed(source="com/hjm/assets/images/leasedlines.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/leasedlines_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/leasedlines.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/leasedlines.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleCriarOD{   	
+	upSkin:Embed(source="com/hjm/assets/images/criar_od.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/criar_od_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/criar_od.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/criar_od.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleListarOD{   	
+	upSkin:Embed(source="com/hjm/assets/images/listar_od.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/listar_od_MOver.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/listar_od.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/listar_od.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleImportBill{   	
+	upSkin:Embed(source="com/hjm/assets/images/import_fatura.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/import_fatura_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/import_fatura.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/import_fatura.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleBill{   	
+	upSkin:Embed(source="com/hjm/assets/images/fatura.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/fatura_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/fatura.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/fatura.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleFarol{   	
+	upSkin:Embed(source="com/hjm/assets/images/farol.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/farol_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/farol.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/farol.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleConciliar{   	
+	upSkin:Embed(source="com/hjm/assets/images/conciliarmenu.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/conciliarmenu_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/conciliarmenu.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/conciliarmenu.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleBillCircuit{   	
+	upSkin:Embed(source="com/hjm/assets/images/circuito.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/circuito_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/circuito.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/circuito.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}  						 			 			
+Button.buttonStyleBillAddCircuit{   	
+	upSkin:Embed(source="com/hjm/assets/images/add_circuito.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/add_circuito_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/add_circuito.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/add_circuito.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+Button.buttonStyleOpex{   	
+	upSkin:Embed(source="com/hjm/assets/images/fatura.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/fatura_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/fatura.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/fatura.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}		
+Button.buttonStyleReports{   	
+	upSkin:Embed(source="com/hjm/assets/images/bt_relatorio.png");   	
+	overSkin:Embed(source="com/hjm/assets/images/bt_relatorio_mover.png");   	
+	downSkin:Embed(source="com/hjm/assets/images/bt_relatorio.png");   	
+	disabledSkin:Embed(source="com/hjm/assets/images/bt_relatorio.png");
+	color: #FFFFFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+}
+TabBar.tabBarStyle{
+	selectedTabTextStyleName: tabBarSelectedTabText;
+	tabStyleName: tabBarTab;
+	background-color: #002d65;
+	tab-width: 120;
+	horizontal-gap: 0;
+}
+
+.tabBarSelectedTabText
+{
+	color: #FFFFFF;
+	
+}
+.tabBarTab
+{
+	borderColor: #4D4D4D;
+	background-alpha: 0.8;
+	cornerRadius: 0;
+	fillAlphas: 0.0, 0.0, 0.0, 0.0;
+	themeColor: #0029F7;
+	paddingBottom: -4;
+}
+Button.tabBarFirstTab
+{
+	textAlign: right;
+	borderColor: #4D4D4D;
+	background-alpha: 0;
+	cornerRadius: 0;
+	fillAlphas: 0.0, 0.0, 0.0, 0.0;
+	themeColor: #454B6C;
+	paddingRight: 10;
+	paddingBottom: -4;
+}
+Button.pimllBt
+{
+	borderColor: #4D4D4D;
+	background-alpha: 0;
+	cornerRadius: 0;
+	fillAlphas: 0.0, 0.0, 0.0, 0.0;
+	themeColor: #454B6C;
+}
+TextArea.resume
+{
+	textAlign: center;
+	fontStyle: italic;
+	fontSize: 11;
+}

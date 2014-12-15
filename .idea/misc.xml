@@ -16,7 +16,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="ruby-2.0.0-p195" project-jdk-type="RUBY_SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="ruby-1.8.7-p249" project-jdk-type="RUBY_SDK" />
   <component name="masterDetails">
     <states>
       <state key="ScopeChooserConfigurable.UI">

@@ -1,0 +1,21 @@
+Unable to load equipamento, underlying cause no such file to load -- equipamento 
+
+ C:/Ruby187/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+C:/Ruby187/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/dependencies.rb:158:in `require'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/dependencies.rb:265:in `require_or_load'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/dependencies.rb:224:in `depend_on'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/dependencies.rb:136:in `require_dependency'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-2.3.5/lib/active_record/fixtures.rb:853:in `try_to_load_dependency'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-2.3.5/lib/active_record/fixtures.rb:868:in `require_fixture_classes'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-2.3.5/lib/active_record/fixtures.rb:865:in `each'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-2.3.5/lib/active_record/fixtures.rb:865:in `require_fixture_classes'
+C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-2.3.5/lib/active_record/fixtures.rb:848:in `fixtures'
+C:/HJMRails/controle_equipamentos/test/test_helper.rb:35
+C:\Program Files (x86)\JetBrains\RubyMine 5.4.3.2.1\rb\testing\runner\tunit_or_minitest_in_folder_runner.rb:51:in `require'
+C:\Program Files (x86)\JetBrains\RubyMine 5.4.3.2.1\rb\testing\runner\tunit_or_minitest_in_folder_runner.rb:51:in `require_all_test_scripts'
+C:\Program Files (x86)\JetBrains\RubyMine 5.4.3.2.1\rb\testing\runner\tunit_or_minitest_in_folder_runner.rb:44:in `each'
+C:\Program Files (x86)\JetBrains\RubyMine 5.4.3.2.1\rb\testing\runner\tunit_or_minitest_in_folder_runner.rb:44:in `require_all_test_scripts'
+C:\Program Files (x86)\JetBrains\RubyMine 5.4.3.2.1\rb\testing\runner\tunit_or_minitest_in_folder_runner.rb:134
+-e:1:in `load'
+-e:1
